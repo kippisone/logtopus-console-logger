@@ -4,21 +4,23 @@
   "description": "Console logger module for Logtopus logger",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --reporter lagoon-reporter tests/*.spec.js"
+    "test": "mocha --reporter lagoon-reporter tests/unit/*.spec.js"
   },
   "repository": {
     "type": "git",
-    "url": "git@calypso:~/logtopus-console-logger.git"
+    "url": "git@github.com:Andifeind/logtopus-console-logger.git"
   },
   "keywords": [
     "log",
     "logger",
-    "logtopus"
+    "logtopus",
+    "console",
+    "console.log"
   ],
   "author": "Andi Heinkelein andifeind@noname-media.com>",
   "license": "MIT",
   "devDependencies": {
-    "@noname-media/standard": "^1.0.1",
+    "@noname-media/eslint-config-standard": "^1.1.0",
     "inspect.js": "^1.9.0",
     "lagoon-reporter": "^0.3.4",
     "mocha": "^3.5.0",
