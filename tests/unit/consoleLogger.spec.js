@@ -11,7 +11,6 @@ describe('ConsoleLogger', () => {
   describe('info()', () => {
     let logger
     let loggerStub
-    let newLoggerStub
     let sandbox
 
     beforeEach(() => {
@@ -21,14 +20,13 @@ describe('ConsoleLogger', () => {
       })
 
       loggerStub = sandbox.stub(logger, 'write')
-      newLoggerStub = sandbox.stub(logger, 'newWrite')
     })
 
     afterEach(() => {
       sandbox.restore()
     })
 
-    it.skip('should log a info log', () => {
+    it('should log a info log', () => {
       logger.log({
         type: 'info',
         msg: 'Test log',
@@ -37,7 +35,6 @@ describe('ConsoleLogger', () => {
 
       inspect(loggerStub).wasCalledOnce()
       inspect(loggerStub).wasCalledWith('info Test log 123 456\n')
-      inspect(newLoggerStub).wasCalledWith('info Test log 123 456\n')
     })
 
     it('should log a colorized info log', () => {
@@ -50,7 +47,6 @@ describe('ConsoleLogger', () => {
 
       inspect(loggerStub).wasCalledOnce()
       inspect(loggerStub).wasCalledWith('\u001b[38;5;27minfo\u001b[m: Test log \u001b[38;5;214m123\u001b[m \u001b[38;5;214m456\u001b[m\n')
-      inspect(newLoggerStub).wasCalledWith('\u001b[38;5;27minfo\u001b[m: Test log \u001b[38;5;214m123\u001b[m \u001b[38;5;214m456\u001b[m\n')
     })
   })
 })

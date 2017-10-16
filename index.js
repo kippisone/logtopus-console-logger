@@ -63,12 +63,10 @@ class ConsoleLogger {
     let type = msg.type
 
     let indent = type.length + 2
-    let typeStr = this.colorifyType(type)
 
     const cf = colorfy()
     const typeColor = this.__levels[type].labelColor
-    const textColor = this.__levels[type].color
-    cf.ansi(typeColor, type, 'ltrim').txt(':', 'ltrim').txt(textColor, text)
+    cf.ansi(typeColor, type, 'ltrim').txt(':', 'ltrim').txt(text)
     if (data.length > 0) {
       let dataStr = ''
       for (let d of msg.data) {
@@ -78,20 +76,20 @@ class ConsoleLogger {
       cf.txt(this.indent(dataStr, type))
     }
 
-    const l = cf.colorfy(this.colorsEnabled)
-    this.newWrite(l)
+    const l = cf.nl().colorfy(this.colorsEnabled)
+    this.write(l)
 
-    if (data.length > 0) {
-      let dataStr = ''
-      for (let d of msg.data) {
-        dataStr += this.stringify(d, indent)
-      }
-
-      dataStr = this.indent(dataStr, type)
-      this.write(typeStr + ' ' + this.colorifyMsg(text) + dataStr + '\n')
-    } else {
-      this.write(typeStr + ' ' + this.colorifyMsg(text) + '\n')
-    }
+    // if (data.length > 0) {
+    //   let dataStr = ''
+    //   for (let d of msg.data) {
+    //     dataStr += this.stringify(d, indent)
+    //   }
+    //
+    //   dataStr = this.indent(dataStr, type)
+    //   this.write(typeStr + ' ' + this.colorifyMsg(text) + dataStr + '\n')
+    // } else {
+    //   this.write(typeStr + ' ' + this.colorifyMsg(text) + '\n')
+    // }
   }
 
   colorifyType (type) {
@@ -119,8 +117,8 @@ class ConsoleLogger {
   }
 
   stringify (data, indent) {
-    var nl = this.useSymbols ? '\n' : ' ',
-      indentStr = this.useSymbols ? strRepeat(' ', indent) : ''
+    const nl = this.useSymbols ? '\n' : ' '
+    const indentStr = this.useSymbols ? strRepeat(' ', indent) : ''
 
     switch (typeof data) {
       case 'string':
@@ -156,10 +154,6 @@ class ConsoleLogger {
 
   write (msg) {
     process.stdout.write(msg)
-  }
-
-  newWrite (msg) {
-    // process.stdout.write(msg)
   }
 }
 
