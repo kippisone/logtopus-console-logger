@@ -66,30 +66,16 @@ class ConsoleLogger {
 
     const cf = colorfy()
     const typeColor = this.__levels[type].labelColor
-    cf.ansi(typeColor, type, 'ltrim').txt(':', 'ltrim').txt(text)
+    cf.ansi(typeColor, type, 'ltrim').txt(': ').txt(text)
     if (data.length > 0) {
-      let dataStr = ''
       for (let d of msg.data) {
-        dataStr += this.stringify(d, indent)
+        const dataStr = this.stringify(d, indent)
+        cf.txt(' ' + dataStr.colorfy(this.colorsEnabled))
       }
-
-      cf.txt(this.indent(dataStr, type))
     }
 
     const l = cf.nl().colorfy(this.colorsEnabled)
     this.write(l)
-
-    // if (data.length > 0) {
-    //   let dataStr = ''
-    //   for (let d of msg.data) {
-    //     dataStr += this.stringify(d, indent)
-    //   }
-    //
-    //   dataStr = this.indent(dataStr, type)
-    //   this.write(typeStr + ' ' + this.colorifyMsg(text) + dataStr + '\n')
-    // } else {
-    //   this.write(typeStr + ' ' + this.colorifyMsg(text) + '\n')
-    // }
   }
 
   colorifyType (type) {
@@ -105,47 +91,41 @@ class ConsoleLogger {
     return msg
   }
 
-  indent (data, type) {
-    let conf = this.__levels[type]
-
-    if (this.useSymbols && data) {
-      let indentWith = strRepeat(' ', conf.symbol.length) + ' \u001b[48;5;' + conf.bgcolor + 'm \u001b[m  '
-      data = data.replace(/\n/g, '\n' + indentWith)
-    }
-
-    return data
-  }
-
   stringify (data, indent) {
-    const nl = this.useSymbols ? '\n' : ' '
-    const indentStr = this.useSymbols ? strRepeat(' ', indent) : ''
+    const cf = colorfy()
 
     switch (typeof data) {
       case 'string':
-        data = nl + indentStr + '\u001b[38;5;250m"' + data + '"\u001b[m'
+        // data = '\u001b[38;5;250m"' + data + '"\u001b[m'
+        cf.lgrey(data)
         break
       case 'object':
         if (data === null) {
-          data = nl + ' \u001b[38;5;33mnull\u001b[m'
+          // data = nl + ' \u001b[38;5;33mnull\u001b[m'
+          cf.lime('null')
         } else {
-          data = nl + util.inspect(data, { showHidden: false, depth: null, colors: true })
+          cf.txt(util.inspect(data, { showHidden: false, depth: null, colors: true }))
         }
         break
       case 'undefined':
-        data = ' \u001b[38;5;201mundefined\u001b[m'
+        // data = ' \u001b[38;5;201mundefined\u001b[m'
+        cf.ored('undefined')
         break
       case 'boolean':
-        data = ' ' + (data ? '\u001b[38;5;201mtrue' : '\u001b[38;5;201mfalse') + '\u001b[m'
+        // data = ' ' + (data ? '\u001b[38;5;201mtrue' : '\u001b[38;5;201mfalse') + '\u001b[m'
+        cf.ored(data ? 'true' : 'false')
         break
       case 'number':
-        data = ' \u001b[38;5;214m' + String(data) + '\u001b[m'
+        // data = ' \u001b[38;5;214m' + String(data) + '\u001b[m'
+        cf.yellow(String(data))
         break
       case 'function':
-        data = ' \u001b[38;5;148m' + data.toString() + '\u001b[m'
+        // data = ' \u001b[38;5;148m' + data.toString() + '\u001b[m'
+        cf.pink('Function: ' + data.toString())
         break
     }
 
-    return data
+    return cf
   }
 
   flush () {

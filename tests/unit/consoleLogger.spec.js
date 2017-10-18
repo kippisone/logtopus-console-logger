@@ -34,7 +34,7 @@ describe('ConsoleLogger', () => {
       })
 
       inspect(loggerStub).wasCalledOnce()
-      inspect(loggerStub).wasCalledWith('info Test log 123 456\n')
+      inspect(loggerStub).wasCalledWith('info: Test log 123 456\n')
     })
 
     it('should log a colorized info log', () => {
@@ -46,7 +46,7 @@ describe('ConsoleLogger', () => {
       })
 
       inspect(loggerStub).wasCalledOnce()
-      inspect(loggerStub).wasCalledWith('\u001b[38;5;27minfo\u001b[m: Test log \u001b[38;5;214m123\u001b[m \u001b[38;5;214m456\u001b[m\n')
+      inspect(loggerStub).wasCalledWith('\u001b[38;5;27minfo\u001b[m: Test log \u001b[38;5;226m123\u001b[m \u001b[38;5;226m456\u001b[m\n')
     })
   })
 })
