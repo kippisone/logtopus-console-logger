@@ -16,7 +16,7 @@ describe('ConsoleLogger', () => {
     beforeEach(() => {
       sandbox = sinon.sandbox.create()
       logger = new ConsoleLogger({
-        noColor: true
+        colors: false
       })
 
       loggerStub = sandbox.stub(logger, 'write')

@@ -5,8 +5,9 @@ const colorfy = require('colorfy')
 
 class ConsoleLogger {
   constructor (conf) {
+    conf = conf || {}
     this.isTTY = true
-    this.colorsEnabled = conf.noColor ? false : this.isTTY
+    this.colorsEnabled = conf.colors === undefined ? this.isTTY : !!conf.colors
 
     this.__levels = {
       'debug': {

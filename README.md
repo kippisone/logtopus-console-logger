@@ -10,5 +10,5 @@ Configuration
 
 ```cson
 console:
-  noColor: false // disable CLI colors
+  colors: true // enable CLI colors
 ```
