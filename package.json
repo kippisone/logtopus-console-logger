@@ -1,6 +1,6 @@
 {
   "name": "logtopus-console-logger",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Console logger module for Logtopus logger",
   "main": "index.js",
   "scripts": {
