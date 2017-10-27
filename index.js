@@ -3,16 +3,6 @@
 const util = require('util')
 const colorfy = require('colorfy')
 
-function strRepeat (str, num) {
-  let newStr = ''
-  while (num > 0) {
-    newStr += str
-    num--
-  }
-
-  return newStr
-}
-
 class ConsoleLogger {
   constructor (conf) {
     this.isTTY = true

@@ -37,3 +37,8 @@ log.log({
     { one: 'one', two: 'two', three: 3 }
   ]
 })
+
+log.log({
+  type: 'error',
+  msg: new Error('Shit happens')
+})
