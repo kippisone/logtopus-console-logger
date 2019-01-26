@@ -11,4 +11,7 @@ Configuration
 ```cson
 console:
   colors: true // enable CLI colors
+  timestame: true // enable timestamp logging
+  uptime: true // enable uptime log
+  template: 'minimal' // change output template
 ```

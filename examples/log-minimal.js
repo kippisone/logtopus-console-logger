@@ -2,7 +2,8 @@ const ConsoleLogger = require('../')
 const log = new ConsoleLogger({
   level: 'debug',
   timestamp: true,
-  uptime: false
+  uptime: false,
+  template: 'minimal'
 })
 
 log.log({

@@ -6,8 +6,7 @@ const colorfy = require('colorfy')
 class ConsoleLogger {
   constructor (conf) {
     conf = conf || {}
-    this.isTTY = true
-    this.colorsEnabled = conf.colors === undefined ? this.isTTY : !!conf.colors
+    this.colorsEnabled = conf.colors === undefined ? process.stdout.isTTY : !!conf.colors
     this.template = conf.template || 'default'
     this.timestamp = conf.timestamp || false
     this.uptime = conf.uptime || false
@@ -72,6 +71,14 @@ class ConsoleLogger {
 
       cf.txt(text)
     } else {
+      if (this.timestamp) {
+        cf.dgrey(msg.time.toISOString().slice(11, -1)).txt(' ')
+      }
+
+      if (this.uptime) {
+        cf.dgrey(msg.uptime).txt(' ')
+      }
+
       cf.ansi(typeColor, type, 'ltrim').txt(': ').txt(text)
     }
     if (data.length > 0) {
