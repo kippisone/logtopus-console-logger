@@ -14,7 +14,7 @@ describe('ConsoleLogger', () => {
     let sandbox
 
     beforeEach(() => {
-      sandbox = sinon.sandbox.create()
+      sandbox = sinon.createSandbox()
       logger = new ConsoleLogger({
         colors: false
       })
