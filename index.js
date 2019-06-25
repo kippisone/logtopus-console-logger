@@ -6,8 +6,10 @@ const colorfy = require('colorfy')
 class ConsoleLogger {
   constructor (conf) {
     conf = conf || {}
-    this.isTTY = true
-    this.colorsEnabled = conf.colors === undefined ? this.isTTY : !!conf.colors
+    this.colorsEnabled = conf.colors === undefined ? process.stdout.isTTY : !!conf.colors
+    this.template = conf.template || 'default'
+    this.timestamp = conf.timestamp || false
+    this.uptime = conf.uptime || false
 
     this.__levels = {
       'debug': {
@@ -49,15 +51,36 @@ class ConsoleLogger {
   }
 
   log (msg) {
-    let data = msg.data || ''
-    let text = msg.msg
-    let type = msg.type
+    const data = msg.data || ''
+    const text = msg.msg
+    const type = msg.type
 
-    let indent = type.length + 2
+    const indent = type.length + 2
 
     const cf = colorfy()
     const typeColor = this.__levels[type].labelColor
-    cf.ansi(typeColor, type, 'ltrim').txt(': ').txt(text)
+    if (this.template === 'minimal') {
+      cf.ansi(typeColor, '▊', 'ltrim')
+      if (this.timestamp) {
+        cf.dgrey(msg.time.toISOString().slice(11, -1)).ansi(typeColor, '▐ ')
+      }
+
+      if (this.uptime) {
+        cf.dgrey(msg.uptime).ansi(typeColor, '▐ ')
+      }
+
+      cf.txt(text)
+    } else {
+      if (this.timestamp) {
+        cf.dgrey(msg.time.toISOString().slice(11, -1)).txt(' ')
+      }
+
+      if (this.uptime) {
+        cf.dgrey(msg.uptime).txt(' ')
+      }
+
+      cf.ansi(typeColor, type, 'ltrim').txt(': ').txt(text)
+    }
     if (data.length > 0) {
       for (let d of msg.data) {
         const dataStr = this.stringify(d, indent)
