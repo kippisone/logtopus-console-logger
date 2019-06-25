@@ -95,7 +95,7 @@ class ConsoleLogger {
           // data = nl + ' \u001b[38;5;33mnull\u001b[m'
           cf.lime('null')
         } else {
-          cf.txt(util.inspect(data, { showHidden: false, depth: null, colors: true }))
+          cf.txt(util.inspect(data, { showHidden: false, depth: null, colors: this.colorsEnabled }))
         }
         break
       case 'undefined':

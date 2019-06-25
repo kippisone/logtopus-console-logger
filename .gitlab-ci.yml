@@ -1,0 +1,9 @@
+image: node:8
+stages:
+  - test
+  - publish
+  - push-github
+
+include:
+  - project: 'nnmedia/gitlabci'
+    file: 'gitlab-ci-nodejs.yml'
